@@ -1,5 +1,5 @@
 # _TS2Kit_: Differentiable Spherical Harmonic Transforms in PyTorch
-_TS2Kit_ (**Version 1.0**) is a self-contained PyTorch library which computes auto-differentiable forward and inverse discrete Spherical Harmonic Transforms (**SHTs**). The routines in _TS2Kit_ are based on the seminal _S2Kit_ and _SOFT_ packages, but are designed for evaluation on a GPU.  Specifically, the Discrete Legendre Transform (**DLT**) is computed via sparse matrix multiplication in what is essentially a tensorized version of the so-called "semi-naive" algorithm. This enables parallelization while keeping memory footprint small, and the end result are auto-differentiable forward and inverse SHTs that are fast and efficient in a practical sense. For example, given a spherical signal (tensor) taking values on a 128 X 128 spherical grid with b = 4096 batch dimensions,  _TS2Kit_ computes a forward SHT followed by an inverse SHT in approximately in tens of milliseconds at floating precision.
+_TS2Kit_ (**Version 1.0**) is a self-contained PyTorch library which computes auto-differentiable forward and inverse discrete Spherical Harmonic Transforms (**SHTs**). The routines in _TS2Kit_ are based on the seminal _S2Kit_ and _SOFT_ packages, but are designed for evaluation on a GPU.  Specifically, the Discrete Legendre Transform (**DLT**) is computed via sparse matrix multiplication in what is essentially a tensorized version of the so-called "semi-naive" algorithm. This enables parallelization while keeping memory footprint small, and the end result are auto-differentiable forward and inverse SHTs that are fast and efficient in a practical sense. For example, given a spherical signal (tensor) taking values on a 128 X 128 spherical grid with b = 4096 batch dimensions,  _TS2Kit_ computes a forward SHT followed by an inverse SHT in approximately tens of milliseconds at floating precision.
 
 ## Dependencies
 - [PyTorch >= 1.10](https://pytorch.org)
@@ -96,5 +96,5 @@ Psi2_f = F_f(I_f(Psi_f))
 ## This error will be much larger
 error = torch.sum(torch.abs(Psi-Psi2)) / torch.sum(torch.abs(Psi))
 ```
-This does not imply that the `FSHT` and `ISHT` modules are "slow" at double precision nor "inaccurate" at floating precision. Rather, it all depends on the application. The `test_ts2kit.ipynb` notebook can be used to compare the transforms at different precisions and bandlimits to see see what makes sense for your use case. 
+This does not imply that the `FSHT` and `ISHT` modules are "slow" at double precision nor "inaccurate" at floating precision. Rather, it all depends on the application. The `test_ts2kit.ipynb` notebook can be used to compare the transforms at different precisions and bandlimits to see what makes sense for your use case. 
 
