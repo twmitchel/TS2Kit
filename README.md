@@ -98,3 +98,20 @@ error = torch.sum(torch.abs(Psi-Psi2)) / torch.sum(torch.abs(Psi))
 ```
 This does not imply that the `FSHT` and `ISHT` modules are "slow" at double precision nor "inaccurate" at floating precision. Rather, it all depends on the application. The `test_ts2kit.ipynb` notebook can be used to compare the transforms at different precisions and bandlimits to see what makes sense for your use case. 
 
+## Authorship and acknowledgements
+
+Author: Thomas (Tommy) Mitchel (tmitchel 'at' jhu 'dot' edu)
+
+Please cite my paper (which motivated the development of this package) if this code contributes to a publication:
+```
+@misc{mitchelMobiusConv,
+  doi = {10.48550/ARXIV.2201.12212},
+  url = {https://arxiv.org/abs/2201.12212},
+  author = {Mitchel, Thomas W. and Aigerman, Noam and Kim, Vladimir G. and Kazhdan, Michael},
+  title = {Möbius Convolutions for Spherical CNNs},
+  publisher = {arXiv},
+  year = {2022},
+  copyright = {arXiv.org perpetual, non-exclusive license}
+}
+```
+
