@@ -102,7 +102,7 @@ This does not imply that the `FSHT` and `ISHT` modules are "slow" at double prec
 
 Author: Thomas (Tommy) Mitchel (tmitchel 'at' jhu 'dot' edu)
 
-Please cite my paper (which motivated the development of this package) if this code contributes to a publication:
+Citation:
 ```
 @misc{mitchelMobiusConv,
   doi = {10.48550/ARXIV.2201.12212},
