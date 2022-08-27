@@ -1,5 +1,5 @@
-# _TS2Kit_: Tensorized Spherical Harmonic Transforms in PyTorch
-_TS2Kit_ (**Version 1.0**) is a self-contained PyTorch library which computes auto-differentiable forward and inverse discrete Spherical Harmonic Transforms (**SHTs**). The routines in _TS2Kit_ are based on the seminal _S2Kit_ and _SOFT_ packages, but are designed for evaluation on a GPU.  Specifically, the Discrete Legendre Transform (**DLT**) is computed via sparse matrix multiplication in what is essentially a tensorized version of the so-called "semi-naive" algorithm. This enables parallelization while keeping memory footprint small, and the end result are auto-differentiable forward and inverse SHTs that are fast and efficient in a practical sense. For example, given a spherical signal (tensor) taking values on a 128 X 128 spherical grid with b = 4096 batch dimensions,  _TS2Kit_ computes a forward SHT followed by an inverse SHT in approximately in tens of milliseconds at floating precision.
+# _TS2Kit_: Differentiable Spherical Harmonic Transforms in PyTorch
+_TS2Kit_ (**Version 1.0**) is a self-contained PyTorch library which computes auto-differentiable forward and inverse discrete Spherical Harmonic Transforms (**SHTs**). The routines in _TS2Kit_ are based on the seminal _S2Kit_ and _SOFT_ packages, but are designed for evaluation on a GPU.  Specifically, the Discrete Legendre Transform (**DLT**) is computed via sparse matrix multiplication in what is essentially a tensorized version of the so-called "semi-naive" algorithm. This enables parallelization while keeping memory footprint small, and the end result are auto-differentiable forward and inverse SHTs that are fast and efficient in a practical sense. For example, given a spherical signal (tensor) taking values on a 128 X 128 spherical grid with b = 4096 batch dimensions,  _TS2Kit_ computes a forward SHT followed by an inverse SHT in approximately tens of milliseconds at floating precision.
 
 ## Dependencies
 - [PyTorch >= 1.10](https://pytorch.org)
@@ -11,7 +11,7 @@ Please see `TS2Kit.pdf` for a detailed review of the chosen conventions and impl
 To use _TS2Kit_, simply copy the `TS2Kit` folder into your project directory. 
 
 ### Setting the cache path
-Several tensors are pre-computed at initialization and at higher bandlimits (B <= 64) this can take some time. To avoid re-computing these quantities every initialization, the modules will check if the tensors have been saved in a cache directory and either A). load the tensors directly from the cache; or B). compute the tensors and save them to the cache directory so they can be loaded next time the modules are initialized. 
+Several tensors are pre-computed at initialization and at higher bandlimits (B >= 64) this can take some time. To avoid re-computing these quantities every initialization, the modules will check if the tensors have been saved in a cache directory and either A). load the tensors directly from the cache; or B). compute the tensors and save them to the cache directory so they can be loaded next time the modules are initialized. 
 
 To enable caching, choose a directory on your machine to serve as the cache folder and set the variable `cacheDir` at the top of the `ts2kit.py` file to the absolute path of the directory, _e.g._
 ```python
@@ -96,5 +96,22 @@ Psi2_f = F_f(I_f(Psi_f))
 ## This error will be much larger
 error = torch.sum(torch.abs(Psi-Psi2)) / torch.sum(torch.abs(Psi))
 ```
-This does not imply that the `FSHT` and `ISHT` modules are "slow" at double precision nor "inaccurate" at floating precision. Rather, it all depends on the application. The `test_ts2kit.ipynb` notebook can be used to compare the transforms at different precisions and bandlimits to see see what makes sense for your use case. 
+This does not imply that the `FSHT` and `ISHT` modules are "slow" at double precision nor "inaccurate" at floating precision. Rather, it all depends on the application. The `test_ts2kit.ipynb` notebook can be used to compare the transforms at different precisions and bandlimits to see what makes sense for your use case. 
+
+## Authorship and acknowledgements
+
+Author: Thomas (Tommy) Mitchel (tmitchel 'at' jhu 'dot' edu)
+
+Citation:
+```
+@misc{mitchelMobiusConv,
+  doi = {10.48550/ARXIV.2201.12212},
+  url = {https://arxiv.org/abs/2201.12212},
+  author = {Mitchel, Thomas W. and Aigerman, Noam and Kim, Vladimir G. and Kazhdan, Michael},
+  title = {Möbius Convolutions for Spherical CNNs},
+  publisher = {arXiv},
+  year = {2022},
+  copyright = {arXiv.org perpetual, non-exclusive license}
+}
+```
 
