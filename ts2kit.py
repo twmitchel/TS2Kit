@@ -9,23 +9,37 @@ from math import pi as PI
 
 sqrt2 = np.sqrt(2.0);
 
-## Change this to the absolute path of your cache folder
-cacheDir = '/absolute/path/to/my/cache/dir'
-
 ##########################
 ######## Cache ###########
 ##########################
-def clearCache(cacheDir=cacheDir):
+
+try:
+    ################################################
+    ### For integration with Mobius Convolutions ###
+    ################################################
     
-    cFiles = glob.glob(osp.join(cacheDir, '*.pt'));
+    from cache.cache import cacheDir
     
-    for l in range(len(cFiles)):
-        
-        os.remove(cFiles[l]);
-        
+except:
+ 
+    #####################################
+    ### For use as standalone package ###
+    #####################################
     
-    return 1;
-    
+    ## Change this to the absolute path of your cache folder
+    cacheDir = '/absolute/path/to/my/cache/dir'
+
+    def clearCache(cacheDir=cacheDir):
+
+        cFiles = glob.glob(osp.join(cacheDir, '*.pt'));
+
+        for l in range(len(cFiles)):
+
+            os.remove(cFiles[l]);
+
+
+        return 1;
+
 
 #############################
 ######## Utilities ##########
