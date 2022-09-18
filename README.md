@@ -13,15 +13,15 @@ To use _TS2Kit_, simply copy the `TS2Kit` folder into your project directory.
 ### Setting the cache path
 Several tensors are pre-computed at initialization and at higher bandlimits (B >= 64) this can take some time. To avoid re-computing these quantities every initialization, the modules will check if the tensors have been saved in a cache directory and either A). load the tensors directly from the cache; or B). compute the tensors and save them to the cache directory so they can be loaded next time the modules are initialized. 
 
-To enable caching, choose a directory on your machine to serve as the cache folder and set the variable `cacheDir` at the top of the `ts2kit.py` file to the absolute path of the directory, _e.g._
+The repository contains the folder `cache` which serves as the default cache directory. If you'd like to save the precomputed tensors in a different directory, set the variable `defaultCacheDir` at the top of the `ts2kit.py` file to the absolute path of the directory, _e.g._
 ```python
-cacheDir = '/absolute/path/to/cache'
+defaultCacheDir = '/absolute/path/to/your/chosen/directory'
 ```
-The cache directory can be cleared (of `.pt` files) at any time by importing and running the `clearCache` function:
+The cache directory can be cleared (of `.pt` files) at any time by importing and running the `clearTS2KitCache` function:
 ```python
-from TS2Kit.ts2kit import clearCache
+from TS2Kit.ts2kit import clearTS2KitCache
 
-clearCache()
+clearTS2KitCache()
 ```
 
 ## The Forward and Inverse SHTs

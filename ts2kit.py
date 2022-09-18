@@ -13,6 +13,10 @@ sqrt2 = np.sqrt(2.0);
 ######## Cache ###########
 ##########################
 
+## If you'd like to save cached files in a different directory, then change this
+## to the absolute path of said directory
+defaultCacheDir = 'cache'
+
 try:
     ################################################
     ### For integration with Mobius Convolutions ###
@@ -26,19 +30,20 @@ except:
     ### For use as standalone package ###
     #####################################
     
-    ## Change this to the absolute path of your cache folder
-    cacheDir = '/absolute/path/to/my/cache/dir'
-
-    def clearCache(cacheDir=cacheDir):
-
-        cFiles = glob.glob(osp.join(cacheDir, '*.pt'));
-
-        for l in range(len(cFiles)):
-
-            os.remove(cFiles[l]);
+    cacheDir = defaultCacheDir
+    
 
 
-        return 1;
+def clearTS2KitCache(cacheDir=cacheDir):
+
+    cFiles = glob.glob(osp.join(cacheDir, '*.pt'));
+
+    for l in range(len(cFiles)):
+
+        os.remove(cFiles[l]);
+
+
+    return 1;
 
 
 #############################
@@ -403,7 +408,7 @@ class FDLT(nn.Module):
         self.register_buffer('cInd', cInd);
         self.register_buffer('sInd', sInd);
 
-        self.register_buffer('Cm', normCm(B));
+        self.register_buffer('iCm', torch.reciprocal(normCm(B)));
         
         self.register_buffer('D', wignerCoeffs(B));
         
@@ -415,7 +420,7 @@ class FDLT(nn.Module):
         B, b = self.B, psiHat.size()[0]
          
         # Multiply by normalization coefficients
-        psiHat = torch.mul(self.Cm[None, :, None], psiHat);
+        psiHat = torch.mul(self.iCm[None, :, None], psiHat);
 
         # Apply DCT + DST to even + odd indexed m
         psiHat[:, self.cInd, :] = self.dct(psiHat[:, self.cInd, :]);
@@ -452,7 +457,7 @@ class IDLT(nn.Module):
         self.register_buffer('cInd', cInd);
         self.register_buffer('sInd', sInd);
 
-        self.register_buffer('iCm', torch.reciprocal(normCm(B)));
+        self.register_buffer('Cm', normCm(B));
         
         self.register_buffer('DT', torch.transpose(wignerCoeffs(B), 0, 1));
         
@@ -469,7 +474,7 @@ class IDLT(nn.Module):
         psiHat[:, self.sInd, :] = self.dst(psiHat[:, self.sInd, :]);
  
         # f: b x theta x phi
-        return torch.mul(self.iCm[None, :, None], psiHat);
+        return torch.mul(self.Cm[None, :, None], psiHat);
 
 
 #############################################################

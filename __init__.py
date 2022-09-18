@@ -1,4 +1,4 @@
-from .ts2kit import clearCache, gridDH, FTSHT, ITSHT
+from .ts2kit import gridDH, FTSHT, ITSHT, clearTS2KitCache
 
 
 __all__ = [
