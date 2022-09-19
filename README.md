@@ -104,14 +104,21 @@ Author: Thomas (Tommy) Mitchel (tmitchel 'at' jhu 'dot' edu)
 
 Citation:
 ```
-@misc{mitchelMobiusConv,
-  doi = {10.48550/ARXIV.2201.12212},
-  url = {https://arxiv.org/abs/2201.12212},
-  author = {Mitchel, Thomas W. and Aigerman, Noam and Kim, Vladimir G. and Kazhdan, Michael},
-  title = {Möbius Convolutions for Spherical CNNs},
-  publisher = {arXiv},
-  year = {2022},
-  copyright = {arXiv.org perpetual, non-exclusive license}
+@inproceedings{10.1145/3528233.3530724,
+author = {Mitchel, Thomas W. and Aigerman, Noam and Kim, Vladimir G. and Kazhdan, Michael},
+title = {M\"{o}bius Convolutions for Spherical CNNs},
+year = {2022},
+isbn = {9781450393379},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3528233.3530724},
+doi = {10.1145/3528233.3530724},
+booktitle = {ACM SIGGRAPH 2022 Conference Proceedings},
+articleno = {30},
+numpages = {9},
+keywords = {Neural networks, M\"{o}bius transformations, Group equivariance, Convolution, Conformal transformations},
+location = {Vancouver, BC, Canada},
+series = {SIGGRAPH '22}
 }
 ```
 
