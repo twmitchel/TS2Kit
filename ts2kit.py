@@ -255,8 +255,8 @@ def normCm(B):
         Cm = torch.empty(2*B - 1).double().fill_(0);
         
         for m in range(-(B-1), B):
-            Cm[m + (B-1)] = np.power(-1.0, m) * np.sqrt(1.0/(2.0*PI)); 
-            
+            Cm[m + (B-1)] = np.power(-1.0, m) * np.sqrt(2.0 * PI);
+
         torch.save(Cm, fName);
         
         print('Computed normCm_{}'.format(B), flush=True);
@@ -408,7 +408,7 @@ class FDLT(nn.Module):
         self.register_buffer('cInd', cInd);
         self.register_buffer('sInd', sInd);
 
-        self.register_buffer('iCm', torch.reciprocal(normCm(B)));
+        self.register_buffer('Cm', normCm(B));
         
         self.register_buffer('D', wignerCoeffs(B));
         
@@ -420,7 +420,7 @@ class FDLT(nn.Module):
         B, b = self.B, psiHat.size()[0]
          
         # Multiply by normalization coefficients
-        psiHat = torch.mul(self.iCm[None, :, None], psiHat);
+        psiHat = torch.mul(self.Cm[None, :, None], psiHat);
 
         # Apply DCT + DST to even + odd indexed m
         psiHat[:, self.cInd, :] = self.dct(psiHat[:, self.cInd, :]);
@@ -457,7 +457,7 @@ class IDLT(nn.Module):
         self.register_buffer('cInd', cInd);
         self.register_buffer('sInd', sInd);
 
-        self.register_buffer('Cm', normCm(B));
+        self.register_buffer('iCm', torch.reciprocal(normCm(B)));
         
         self.register_buffer('DT', torch.transpose(wignerCoeffs(B), 0, 1));
         
@@ -474,7 +474,7 @@ class IDLT(nn.Module):
         psiHat[:, self.sInd, :] = self.dst(psiHat[:, self.sInd, :]);
  
         # f: b x theta x phi
-        return torch.mul(self.Cm[None, :, None], psiHat);
+        return torch.mul(self.iCm[None, :, None], psiHat);
 
 
 #############################################################
